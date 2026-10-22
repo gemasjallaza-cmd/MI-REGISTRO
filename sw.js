@@ -1,4 +1,4 @@
-const CACHE = 'mi-registro-v2';
+const CACHE = 'mi-registro-v3';
 const ASSETS = ['./', './index.html', './css/style.css', './js/app.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
 
