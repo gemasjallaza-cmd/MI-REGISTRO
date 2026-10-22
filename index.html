@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mi Registro</title>
+<meta name="theme-color" content="#17304f">
+<meta name="description" content="Control de faltantes, sobrantes y cruces de inventario">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#fff" fill-opacity=".18"/><rect x="12" y="9" width="24" height="31" rx="5" fill="#fff"/><rect x="18" y="6" width="12" height="7" rx="2.5" fill="#cfe0f5"/><circle cx="18" cy="21" r="2.4" fill="#be3455"/><circle cx="18" cy="28" r="2.4" fill="#0f766e"/><circle cx="18" cy="35" r="2.4" fill="#6d4bb8"/><rect x="23" y="19.8" width="9" height="2.4" rx="1.2" fill="#c4cfdf"/><rect x="23" y="26.8" width="9" height="2.4" rx="1.2" fill="#c4cfdf"/><rect x="23" y="33.8" width="9" height="2.4" rx="1.2" fill="#c4cfdf"/></svg>
+    <div><h1>Mi Registro</h1><p>Faltantes · Sobrantes · Cruces</p></div>
+  </div>
+  <button id="menuBtn" class="icon-btn" aria-label="Más opciones">⋮</button>
+</header>
+
+<section class="summary" aria-label="Resumen">
+  <div class="stat s1"><i>📋</i><b id="sPend">0</b><span>Registros pendientes</span></div>
+  <div class="stat s2"><i>📦</i><b id="sUnits">0</b><span>Unidades pendientes</span></div>
+  <div class="stat s3"><i>✅</i><b id="sDone">0</b><span>Resueltos</span></div>
+</section>
+
+<div class="search"><input id="q" type="search" placeholder="Buscar producto u observación" autocomplete="off" aria-label="Buscar"></div>
+<nav class="chips" id="chips" aria-label="Filtros">
+  <button data-f="pendiente" class="on">Pendientes</button>
+  <button data-f="todos">Todos</button>
+  <button data-f="resuelto">Resueltos</button>
+  <button data-f="faltante">Faltantes</button>
+  <button data-f="sobrante">Sobrantes</button>
+  <button data-f="cruce">Cruces</button>
+</nav>
+
+<main id="list" aria-live="polite"></main>
+<button id="addBtn" class="fab">＋ Nuevo registro</button>
+
+<dialog id="formDlg" class="sheet">
+  <form id="form" novalidate>
+    <h2 id="formTitle">Nuevo registro</h2>
+    <label>Producto *<input id="fName" maxlength="120" required autocomplete="off" placeholder="Ej.: Argollas de oro de 3 mm"></label>
+    <div class="seg" id="fType" role="radiogroup" aria-label="Tipo">
+      <button type="button" data-t="faltante" class="on">Faltante</button>
+      <button type="button" data-t="sobrante">Sobrante</button>
+      <button type="button" data-t="cruce">Cruce</button>
+    </div>
+    <div class="two">
+      <label>Cantidad inicial *<input id="fInit" type="number" inputmode="numeric" min="1" step="1" required></label>
+      <label>Cantidad pendiente<input id="fPend" type="number" inputmode="numeric" min="0" step="1"></label>
+    </div>
+    <label>Observaciones (opcional)<textarea id="fNotes" rows="3" maxlength="500" placeholder="Cliente, pedido, medida, referencia…"></textarea></label>
+    <p id="fErr" class="err" role="alert"></p>
+    <div class="btns">
+      <button type="button" class="btn ghost" id="fCancel">Cancelar</button>
+      <button type="submit" class="btn primary" id="fSave">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="qtyDlg" class="sheet">
+  <form id="qtyForm" novalidate>
+    <h2>Cantidad pendiente</h2>
+    <p id="qtyName" class="muted"></p>
+    <input id="qtyInput" type="number" inputmode="numeric" min="0" step="1" class="big-input">
+    <p id="qtyErr" class="err" role="alert"></p>
+    <div class="btns">
+      <button type="button" class="btn ghost" id="qtyCancel">Cancelar</button>
+      <button type="submit" class="btn primary">Aceptar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="confirmDlg" class="sheet">
+  <h2 id="cTitle">¿Seguro?</h2>
+  <p id="cText" class="muted"></p>
+  <div class="btns">
+    <button class="btn ghost" id="cNo">Cancelar</button>
+    <button class="btn danger" id="cYes">Confirmar</button>
+  </div>
+</dialog>
+
+<dialog id="menuDlg" class="sheet">
+  <h2>Opciones</h2>
+  <button class="menu-item" id="mCsv">📄 Exportar a CSV (Excel)</button>
+  <button class="menu-item" id="mBackup">💾 Crear copia de seguridad</button>
+  <button class="menu-item" id="mRestore">♻️ Restaurar copia de seguridad</button>
+  <button class="menu-item" id="mInstall" hidden>📲 Instalar aplicación</button>
+  <p class="muted small" id="mInfo"></p>
+  <button class="btn ghost wide" id="mClose">Cerrar</button>
+</dialog>
+<input type="file" id="fileIn" accept=".json,application/json" hidden>
+<div id="toast" role="status"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
